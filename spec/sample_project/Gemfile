@@ -1,0 +1,7 @@
+# frozen-string-literal: true
+
+source 'https://rubygems.org'
+
+gem 'sequel_tools', path: '../..'
+gem 'pg'
+gem 'rake'

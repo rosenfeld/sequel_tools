@@ -1,0 +1,4 @@
+require 'sequel_tools/actions_manager'
+require 'sequel_tools/all_actions'
+SequelTools::ActionsManager::Action.unregister :schema_dump_postgres
+load File.join __dir__, 'Rakefile'

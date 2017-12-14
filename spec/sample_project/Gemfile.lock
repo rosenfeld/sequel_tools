@@ -1,0 +1,23 @@
+PATH
+  remote: ../..
+  specs:
+    sequel_tools (0.1.0)
+      sequel
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    pg (0.21.0)
+    rake (12.3.0)
+    sequel (5.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  pg
+  rake
+  sequel_tools!
+
+BUNDLED WITH
+   1.16.0

@@ -1,0 +1,52 @@
+# frozen-string-literal: true
+
+require_relative 'actions_manager'
+require 'sequel'
+
+class MigrationUtils
+  def self.apply_migration(context, version, direction)
+    ( puts 'migration version is missing - aborting.'; exit 1 ) if version.nil?
+    filename = "#{File.basename version, '.rb'}.rb"
+    migrator = find_migrator context, direction
+    migrator.migration_tuples.delete_if{|(m, fn, dir)| fn != filename }
+    unless (size = migrator.migration_tuples.size) == 1
+      puts "Expected a single unapplied migration for #{filename} but found #{size}. Aborting."
+      exit 1
+    end
+    migrator.run
+  end
+
+  def self.find_migrator(context, direction = :up)
+    Sequel.extension :migration unless Sequel.respond_to? :migration
+    SequelTools::ActionsManager::Action[:connect_db].run({}, context) unless context[:db]
+    options = { allow_missing_migration_files: true }
+    options[:target] = 0 if direction == :down
+    config = context[:config]
+    Sequel::Migrator.migrator_class(config[:db_migrations_location]).
+      new(context[:db], config[:db_migrations_location], options)
+  end
+
+  def self.current_version(context)
+    migrator = find_migrator(context)
+    migrator.ds.order(Sequel.desc(migrator.column)).get migrator.column
+  end
+
+  def self.last_found_migration(context)
+    migrations_path = context[:config][:db_migrations_location]
+    migrator = find_migrator(context)
+    migrator.ds.order(Sequel.desc(migrator.column)).select_map(migrator.column).find do |fn|
+      File.exist?("#{migrations_path}/#{fn}")
+    end
+  end
+
+  def self.migrations_differences(context)
+    config = context[:config]
+    migrations_path = config[:db_migrations_location]
+    existing = Dir["#{migrations_path}/*.rb"].map{|fn| File.basename fn }.sort
+    migrator = find_migrator context
+    migrated = migrator.ds.select_order_map(migrator.column)
+    unapplied = existing - migrated
+    files_missing = migrated - existing
+    [ unapplied, files_missing ]
+  end
+end

@@ -1,0 +1,13 @@
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+/spec/sample_project/db/migrations/
+/spec/sample_project/db/seeds.rb
+
+# rspec failure tracking
+.rspec_status
