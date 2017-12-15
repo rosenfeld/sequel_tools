@@ -24,18 +24,18 @@ RSpec.describe SequelTools do
 
   context 'Test database and user exist' do
     it 'can connect to sequel_tools_test without using a password' do
-      db = Sequel.connect 'postgres://sequel_test_user@localhost/sequel_tools_test'
+      db = Sequel.connect 'postgres://sequel_tools_user@localhost/sequel_tools_test'
       expect(db['select 1'].get).to eq 1
     end
 
     it 'can connect to sequel_tools_test_pw using a password' do
-      db = Sequel.connect 'postgres://sequel_test_user:secret@localhost/sequel_tools_test_pw'
+      db = Sequel.connect 'postgres://sequel_tools_user:secret@localhost/sequel_tools_test_pw'
       expect(db['select 1'].get).to eq 1
     end
 
     it 'cannot connect to sequel_tools_test_pw without a password' do
       expect{
-        Sequel.connect 'postgres://sequel_test_user@localhost/sequel_tools_test_pw'
+        Sequel.connect 'postgres://sequel_tools_user@localhost/sequel_tools_test_pw'
       }.to raise_error Sequel::DatabaseConnectionError
     end
   end

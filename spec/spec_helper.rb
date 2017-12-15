@@ -24,7 +24,7 @@ module SpecHelpers
   def db
     return CACHE[:db] if CACHE[:db]
     require 'sequel'
-    CACHE[:db] = make_connection 'postgres://sequel_test_user@localhost/sequel_tools_test'
+    CACHE[:db] = make_connection 'postgres://sequel_tools_user@localhost/sequel_tools_test'
   end
 
   def make_connection(uri)
@@ -38,7 +38,7 @@ module SpecHelpers
 
   def with_dbtest
     require 'sequel'
-    dbtest = make_connection 'postgres://sequel_test_user@localhost/sequel_tools_test_test'
+    dbtest = make_connection 'postgres://sequel_tools_user@localhost/sequel_tools_test_test'
     yield dbtest
     dbtest.disconnect
   end
