@@ -18,6 +18,9 @@ RSpec.describe 'reset action' do
         end
       end
     MIGRATION_CONTENT
+    File.write "#{migrations_path}/20171111111112_second.rb", <<~SECOND_MIGRATION
+      Sequel.migration { change { create_table(:second){ primary_key :id } } }
+    SECOND_MIGRATION
     File.write seeds_location, <<~SEEDS_END
       DB << 'create table seed(name text)'
     SEEDS_END
@@ -33,7 +36,9 @@ RSpec.describe 'reset action' do
       expect(db.tables).to_not include :a
     end
     expect(File.read schema_location).
-      to match /INSERT INTO schema_migrations VALUES \(\n  '20171111111111_sample\.rb'\n\);/
+      to match /INSERT INTO schema_migrations VALUES \('20171111111111_sample\.rb'\);/
+    expect(File.read schema_location).
+      to match /INSERT INTO schema_migrations VALUES \('20171111111112_second\.rb'\);/
   end
 end
 

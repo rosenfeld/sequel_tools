@@ -15,8 +15,13 @@ namespace 'dbpw' do
                                                   password: 'secret'), self
 end
 
+dbtest_config = base_config.merge(dbname: 'sequel_tools_test_test',
+                                  maintenancedb: 'sequel_tools_test',
+                                  dump_schema_on_migrate: true)
 namespace 'dbtest' do
-  SequelTools.inject_rake_tasks base_config.merge(dbname: 'sequel_tools_test_test',
-                                                  maintenancedb: 'sequel_tools_test',
-                                                  dump_schema_on_migrate: true), self
+  SequelTools.inject_rake_tasks dbtest_config, self
+end
+
+namespace 'dbtestverbose' do
+  SequelTools.inject_rake_tasks dbtest_config.merge(log_level: :info), self
 end

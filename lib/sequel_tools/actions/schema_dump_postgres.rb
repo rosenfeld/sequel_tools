@@ -19,11 +19,7 @@ class SequelTools::ActionsManager
         puts 'failed to dump data for schema_migrations and schema_info. Aborting.'
         exit 1
       end
-      # to make it easier to see the git diffs and to reduce conflicts when working in separate
-      # branches, we use a separate line for each value in schema_migrations:
-      regex = /(?<=INSERT INTO schema_migrations VALUES \()(.*?)(?=\))/i
-      migration_data = stdout.sub(regex){ |m| "\n  #{m.split(',').join(",\n  ")}\n" }
-      content = [content, migration_data].join "\n\n"
+      content = [content, stdout].join "\n\n"
     end
     require 'fileutils'
     FileUtils.mkdir_p File.dirname schema_location
