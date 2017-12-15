@@ -1,4 +1,4 @@
-# SequelTools
+# SequelTools [![Build Status](https://travis-ci.org/rosenfeld/sequel_tools.svg?branch=master)](https://travis-ci.org/rosenfeld/sequel_tools)
 
 SequelTools brings some tooling around Sequel migrations and database management, providing tasks
 to create, drop and migrate the database, plus dumping and restoring from the last migrated schema.
