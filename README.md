@@ -51,7 +51,7 @@ base_config = SequelTools.base_config(
   dump_schema_on_migrate: false, # it's a good idea to enable it for the reference environment
   pg_dump: 'pg_dump', # command used to run pg_dump
   pg_dump: 'psql', # command used to run psql when calling rake db:shell if adapter is postgres
-  db_migrations_location: 'db/migrations',
+  migrations_location: 'db/migrations',
   schema_location: 'db/migrations/schema.sql',
   seeds_location: 'db/seeds.rb',
   maintenancedb: 'postgres' # for tasks such as creating the database
