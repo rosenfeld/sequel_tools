@@ -6,6 +6,7 @@ module SequelTools
   DEFAULT_CONFIG = {
     project_root: nil,
     pg_dump: 'pg_dump', # command used to run pg_dump
+    psql: 'psql', # command used to run psql
     maintenancedb: 'postgres', # DB to connect to for creating/dropping databases
     db_migrations_location: 'db/migrations',
     schema_location: 'db/migrations/schema.sql',

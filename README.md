@@ -50,6 +50,7 @@ base_config = SequelTools.base_config(
   sql_log_level: :debug,
   dump_schema_on_migrate: false, # it's a good idea to enable it for the reference environment
   pg_dump: 'pg_dump', # command used to run pg_dump
+  pg_dump: 'psql', # command used to run psql when calling rake db:shell if adapter is postgres
   db_migrations_location: 'db/migrations',
   schema_location: 'db/migrations/schema.sql',
   seeds_location: 'db/seeds.rb',
@@ -71,6 +72,32 @@ Then you are able to run several tasks (`rake -T` will list all supported):
     rake db:new_migration[migration_name]
     rake db:migrate
     rake dbtest:setup
+    rake dbtest:shell
+
+You may define your own command to open a shell to your database upon the 'db:shell' task.
+PostgreSQL is supported out-of-the-box, but if it wasn't, here's a sample script that would
+get the job done:
+
+```bash
+#!/bin/bash
+
+# name it like ~/bin/opensql for example and give it execution permission
+
+PGDATABASE=$DBNAME
+PGHOST=$DBHOST
+PGPORT=$DBPORT
+PGUSER=$DBUSERNAME
+PGPASSWORD=$DBPASSWORD
+psql
+```
+
+Then you may pass `shell_command: '~/bin/opensql'` to `SequelTools.base_config`.
+
+Alternatively you can define the `shell_#{dbadapter}` action if you prefer. Take a look at
+the implementation for `shell_postgres` to see how to do that. If you want to share that action
+with others you may either submit a pull request to this project or create a separate gem to
+add support for your database to `sequel_tools`, which wouldn't require waiting for me to
+approve your pull requests and you'd be able to maintain it independently.
 
 ## Development and running tests
 
