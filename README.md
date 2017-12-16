@@ -41,6 +41,18 @@ base_config = SequelTools.base_config(
   dbname: 'mydb',
   username: 'myuser',
   password: 'secret',
+  # default log_level is nil, in which mode the executed actions such as
+  # starting/finishing a migration in a given direction or creating and
+  # dropping the database are not logged to standard output.
+  log_level: :info,
+
+  # Default options:
+  sql_log_level: :debug,
+  dump_schema_on_migrate: false, # it's a good idea to enable it for the reference environment
+  pg_dump: 'pg_dump', # command used to run pg_dump
+  db_migrations_location: 'db/migrations',
+  schema_location: 'db/migrations/schema.sql',
+  seeds_location: 'db/seeds.rb',
   maintenancedb: 'postgres' # for tasks such as creating the database
 )
 
