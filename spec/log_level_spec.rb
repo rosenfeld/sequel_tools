@@ -18,7 +18,15 @@ RSpec.describe 'log_level setting' do
     expect(rake_runner.run_task('dbtest:create')).to be_successful
     reset_result = rake_runner.run_task('dbtestverbose:reset')
     expect(reset_result).to be_successful
-    expect(reset_result.stdout).to match /\[INFO\] Begin applying migration 20171111111111_first.rb, direction: up\n\[INFO\] Finished applying migration 20171111111111_first.rb, direction: up, took 0\.\d+ seconds\n\[INFO\] Begin applying migration 20171111111112_second.rb, direction: up\n\[INFO\] Finished applying migration 20171111111112_second.rb, direction: up, took 0\.\d+ seconds/
+    logs = reset_result.stdout.split "\n"
+    logs.zip([
+      /\A\[INFO\] Begin applying migration 20171111111111_first.rb, direction: up\z/,
+      /\A\[INFO\] Finished applying migration 20171111111111_first.rb, direction: up, took 0\.\d+ seconds\z/,
+      /\A\[INFO\] Begin applying migration 20171111111112_second.rb, direction: up\z/,
+      /\A\[INFO\] Finished applying migration 20171111111112_second.rb, direction: up, took 0\.\d+ seconds\z/,
+    ]).each do |(logged, expected)|
+      expect(logged).to match expected
+    end
   end
 
   # TODO: when log_level is not nil we should consider informing each step being taken, such
