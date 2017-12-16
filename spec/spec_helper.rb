@@ -75,7 +75,7 @@ require 'rspec/expectations'
 
 RSpec::Matchers.define :be_successful do
   match do |action_result|
-    action_result.success == true
+    action_result.success == true && action_result.stderr.empty?
   end
 
   failure_message do |action_result|
