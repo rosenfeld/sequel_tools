@@ -11,11 +11,12 @@ class SequelTools::ActionsManager
       puts 'Database does not exist - aborting.'
       exit 1
     else
-      context.delete(:db).disconnect
+      (old_db = context.delete :db).disconnect
       c = context[:config]
       db = Sequel.connect context[:uri_builder].call(c, c[:maintenancedb])
       db << "drop database #{c[:dbname]}"
       db.disconnect
+      old_db.log_info "Dropped database '#{c[:dbname]}'"
     end
   end
 end

@@ -12,6 +12,8 @@ class SequelTools::ActionsManager
       db = Sequel.connect context[:uri_builder].call(c, c[:maintenancedb])
       db << "create database #{c[:dbname]}"
       db.disconnect
+      Action[:connect_db].run({}, context)
+      context[:db].log_info "Created database '#{c[:dbname]}'"
     else
       puts 'Database already exists - aborting'
       exit 1

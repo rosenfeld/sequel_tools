@@ -20,18 +20,15 @@ RSpec.describe 'log_level setting' do
     expect(reset_result).to be_successful
     logs = reset_result.stdout.split "\n"
     logs.zip([
-      /\A\[INFO\] Begin applying migration 20171111111111_first.rb, direction: up\z/,
+      "[INFO] Dropped database 'sequel_tools_test_test'",
+      "[INFO] Created database 'sequel_tools_test_test'",
+      '[INFO] Begin applying migration 20171111111111_first.rb, direction: up',
       /\A\[INFO\] Finished applying migration 20171111111111_first.rb, direction: up, took 0\.\d+ seconds\z/,
-      /\A\[INFO\] Begin applying migration 20171111111112_second.rb, direction: up\z/,
+      '[INFO] Begin applying migration 20171111111112_second.rb, direction: up',
       /\A\[INFO\] Finished applying migration 20171111111112_second.rb, direction: up, took 0\.\d+ seconds\z/,
     ]).each do |(logged, expected)|
-      expect(logged).to match expected
+      expect(logged).to (String === expected ? eq(expected) : match(expected))
     end
   end
-
-  # TODO: when log_level is not nil we should consider informing each step being taken, such
-  # as dropping/creating a database, loading seeds and so on. Currently only migration-related
-  # tasks are logged by Sequel::Migrator. The remaining tasks are not currently logged, but
-  # it would be a good idea to log them.
 end
 

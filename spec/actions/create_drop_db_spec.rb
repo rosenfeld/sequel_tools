@@ -20,4 +20,20 @@ RSpec.describe 'create and drop actions', order: :defined do
   it 'ignore drop database request if it does not exist on dbtest:drop' do
     expect(rake_runner.run_task('dbtest:drop')).to_not be_successful
   end
+
+  it 'logs actions in verbose mode' do
+    create_result = rake_runner.run_task 'dbtestverbose:create'
+    expect(create_result).to be_successful
+    expect(create_result.stdout).to eq "[INFO] Created database 'sequel_tools_test_test'\n"
+    drop_result = rake_runner.run_task 'dbtestverbose:drop'
+    expect(drop_result).to be_successful
+    expect(drop_result.stdout).to eq "[INFO] Dropped database 'sequel_tools_test_test'\n"
+  end
+
+  it 'does not log actions unless in verbose mode' do
+    result = rake_runner.run_task 'dbtest:create dbtest:drop'
+    expect(result).to be_successful
+    expect(result.stdout).to be_empty
+  end
 end
+
