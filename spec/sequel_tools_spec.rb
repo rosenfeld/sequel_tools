@@ -16,7 +16,7 @@ RSpec.describe SequelTools do
     it 'returns a basic configuration given the minimum required information' do
       config = SequelTools.base_config project_root: '/project_root', dbadapter: 'postgres',
         dbname: 'mydb', username: 'myuser'
-      expect(config[:db_migrations_location]).to eq '/project_root/db/migrations'
+      expect(config[:migrations_location]).to eq '/project_root/db/migrations'
       expect(config[:schema_location]).to eq '/project_root/db/migrations/schema.sql'
       expect(config[:seeds_location]).to eq '/project_root/db/seeds.rb'
     end

@@ -8,7 +8,7 @@ module SequelTools
     pg_dump: 'pg_dump', # command used to run pg_dump
     psql: 'psql', # command used to run psql
     maintenancedb: 'postgres', # DB to connect to for creating/dropping databases
-    db_migrations_location: 'db/migrations',
+    migrations_location: 'db/migrations',
     schema_location: 'db/migrations/schema.sql',
     seeds_location: 'db/seeds.rb',
     dbname: nil,
@@ -29,7 +29,7 @@ module SequelTools
     REQUIRED_KEYS.each do |key|
       raise MissingConfigError, "Expected value for #{key} config is missing" if config[key].nil?
     end
-    [:db_migrations_location, :schema_location, :seeds_location].each do |k|
+    [:migrations_location, :schema_location, :seeds_location].each do |k|
       config[k] = File.expand_path config[k], config[:project_root]
     end
     config

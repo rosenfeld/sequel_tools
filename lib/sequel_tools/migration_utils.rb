@@ -22,8 +22,8 @@ class MigrationUtils
     options = { allow_missing_migration_files: true }
     options[:target] = 0 if direction == :down
     config = context[:config]
-    Sequel::Migrator.migrator_class(config[:db_migrations_location]).
-      new(context[:db], config[:db_migrations_location], options)
+    Sequel::Migrator.migrator_class(config[:migrations_location]).
+      new(context[:db], config[:migrations_location], options)
   end
 
   def self.current_version(context)
@@ -32,7 +32,7 @@ class MigrationUtils
   end
 
   def self.last_found_migration(context)
-    migrations_path = context[:config][:db_migrations_location]
+    migrations_path = context[:config][:migrations_location]
     migrator = find_migrator(context)
     migrator.ds.order(Sequel.desc(migrator.column)).select_map(migrator.column).find do |fn|
       File.exist?("#{migrations_path}/#{fn}")
@@ -41,7 +41,7 @@ class MigrationUtils
 
   def self.migrations_differences(context)
     config = context[:config]
-    migrations_path = config[:db_migrations_location]
+    migrations_path = config[:migrations_location]
     existing = Dir["#{migrations_path}/*.rb"].map{|fn| File.basename fn }.sort
     migrator = find_migrator context
     migrated = migrator.ds.select_order_map(migrator.column)
