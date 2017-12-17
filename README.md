@@ -54,7 +54,10 @@ base_config = SequelTools.base_config(
   migrations_location: 'db/migrations',
   schema_location: 'db/migrations/schema.sql',
   seeds_location: 'db/seeds.rb',
-  maintenancedb: 'postgres' # for tasks such as creating the database
+  # for tasks such as creating the database:
+  # when nil, defaults to the value of the :dbadapter config.
+  # This is the database we should connect to before executing "create database dbname"
+  maintenancedb: :default,
 )
 
 namespace 'db' do
