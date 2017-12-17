@@ -7,14 +7,17 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    jdbc-postgres (42.1.4)
     pg (0.21.0)
     rake (12.3.0)
     sequel (5.3.0)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
+  jdbc-postgres
   pg
   rake
   sequel_tools!

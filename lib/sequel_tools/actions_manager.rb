@@ -6,15 +6,16 @@ module SequelTools
 
     URI_BUILDER = ->(config, dbname = config[:dbname]) do
       c = config
-      uri_parts = [ "#{c[:dbadapter]}://" ]
-      if user = c[:username]
-        uri_parts << user
-        uri_parts << ':' << c[:password] if c[:password]
-        uri_parts << '@'
-      end
+      uri_parts = []
+      uri_parts << 'jdbc:' if RUBY_PLATFORM == 'java'
+      uri_parts << "#{c[:jdbc_adapter] || c[:dbadapter]}://"
       uri_parts << c[:dbhost]
       uri_parts << ':' << c[:dbport] if c[:dbport]
       uri_parts << '/' << dbname
+      if user = c[:username]
+        uri_parts << '?user=' << user
+        uri_parts << '&password=' << c[:password] if c[:password]
+      end
       uri_parts.join('')
     end
 

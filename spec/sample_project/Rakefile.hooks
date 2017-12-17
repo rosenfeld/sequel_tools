@@ -1,12 +1,23 @@
 require 'sequel_tools/actions_manager'
+require 'sequel_tools/all_actions'
+
 register = ->(*args, &block){ SequelTools::ActionsManager::Action.register *args, &block }
 
 register.call(:before_any, nil) do |args, context|
   processed = context[:before_any_processed] ? 'yes' : 'no'
   puts "before_any: #{context[:current_action].name} (processed: #{processed})"
 end
+
 register.call(:before_connect_db, nil){|args, context| puts 'before_connect_db' }
-register.call(:before_any_postgres, nil){|args, context| puts 'before_any_postgres' }
-register.call(:before_connect_db_postgres, nil){|args, context| puts 'before_connect_db_postgres' }
+
+old_action = SequelTools::ActionsManager::Action.unregister :before_any_postgres
+register.call(:before_any_postgres, nil) do |args, context|
+  old_action.run args, context
+  puts 'before_any_postgres'
+end
+
+register.call(:before_connect_db_postgres, nil) do |args, context|
+  puts 'before_connect_db_postgres'
+end
 
 load File.join __dir__, 'Rakefile'

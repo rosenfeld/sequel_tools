@@ -10,6 +10,7 @@
 /spec/sample_project/db/seeds.rb
 /spec/sample_project/bin/bundle
 /spec/sample_project/bin/sequel
+/Gemfile.lock
 
 # rspec failure tracking
 .rspec_status

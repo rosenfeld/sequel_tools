@@ -22,9 +22,9 @@ class RakeRunner
 
   def run_task(task)
     TaskResult.new task, *(
-      ENV['FORK_RAKE'] ?
+      ENV['FORK_RAKE'] && RUBY_PLATFORM != 'java' ?
         FastRakeRunner.run_rake(task) :
-        Open3.capture3(cmd("bin/rake #{task}"))
+        Open3.capture3(cmd("bundle exec rake #{task}"))
     )
   end
 

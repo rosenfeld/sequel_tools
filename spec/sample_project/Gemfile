@@ -3,5 +3,6 @@
 source 'https://rubygems.org'
 
 gem 'sequel_tools', path: '../..'
-gem 'pg'
+gem 'pg', platform: :mri
+gem 'jdbc-postgres', platform: :jruby
 gem 'rake'

@@ -23,19 +23,26 @@ RSpec.describe SequelTools do
   end
 
   context 'Test database and user exist' do
+    def connect(uri)
+      uri = (RUBY_PLATFORM == 'java' ? 'jdbc:postgresql://' : 'postgres://') + uri
+      Sequel.connect uri
+    end
+
     it 'can connect to sequel_tools_test without using a password' do
-      db = Sequel.connect 'postgres://sequel_tools_user@localhost/sequel_tools_test'
+      db = connect 'localhost/sequel_tools_test?user=sequel_tools_user'
       expect(db['select 1'].get).to eq 1
     end
 
     it 'can connect to sequel_tools_test_pw using a password' do
-      db = Sequel.connect 'postgres://sequel_tools_user:secret@localhost/sequel_tools_test_pw'
+      db = connect 'localhost/sequel_tools_test_pw?user=sequel_tools_user&password=secret'
       expect(db['select 1'].get).to eq 1
     end
 
     it 'cannot connect to sequel_tools_test_pw without a password' do
       expect{
-        Sequel.connect 'postgres://sequel_tools_user@localhost/sequel_tools_test_pw'
+        SequelTools.suppress_java_output do
+          connect 'localhost/sequel_tools_test_pw?user=sequel_tools_user'
+        end
       }.to raise_error Sequel::DatabaseConnectionError
     end
   end

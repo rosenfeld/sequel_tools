@@ -42,4 +42,15 @@ module SequelTools
     actions_manager.load_all
     actions_manager.export_as_rake_tasks rake_context
   end
+
+  def self.suppress_java_output
+    return yield unless RUBY_PLATFORM == 'java'
+    require 'java'
+    require 'stringio'
+    old_err = java.lang.System.err
+    java.lang.System.err = java.io.PrintStream.new(StringIO.new.to_outputstream)
+    yield
+  ensure
+    java.lang.System.err = old_err if RUBY_PLATFORM == 'java'
+  end
 end

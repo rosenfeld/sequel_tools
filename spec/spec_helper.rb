@@ -24,12 +24,17 @@ module SpecHelpers
   def db
     return CACHE[:db] if CACHE[:db]
     require 'sequel'
-    CACHE[:db] = make_connection 'postgres://sequel_tools_user@localhost/sequel_tools_test'
+    CACHE[:db] = make_connection 'localhost/sequel_tools_test?user=sequel_tools_user'
   end
 
   def make_connection(uri)
+    if RUBY_PLATFORM == 'java'
+      uri = "jdbc:postgresql://#{uri}"
+    else
+      uri = "postgres://#{uri}"
+    end
     result = Sequel.connect uri
-    if ENV['FORK_RAKE']
+    if ENV['FORK_RAKE'] && RUBY_PLATFORM != 'java'
       result.extension :connection_validator
       result.pool.connection_validation_timeout = -1
     end
@@ -38,7 +43,7 @@ module SpecHelpers
 
   def with_dbtest
     require 'sequel'
-    dbtest = make_connection 'postgres://sequel_tools_user@localhost/sequel_tools_test_test'
+    dbtest = make_connection 'localhost/sequel_tools_test_test?user=sequel_tools_user'
     yield dbtest
     dbtest.disconnect
   end
