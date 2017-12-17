@@ -1,6 +1,5 @@
 # frozen-string-literal: true
 require 'fileutils'
-require 'sequel_tools/all_actions'
 
 RSpec.describe 'stores schema.sql' do
   context 'creates schema.sql on dbtest:schema_dump' do
