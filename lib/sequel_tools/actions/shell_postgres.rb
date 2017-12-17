@@ -1,7 +1,6 @@
 # frozen-string-literal: true
 
 require_relative '../actions_manager'
-require_relative '../pg_helper'
 
 class SequelTools::ActionsManager
   # TODO: this action is not currently tested automatically as it's not critical and not
