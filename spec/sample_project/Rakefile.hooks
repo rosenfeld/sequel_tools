@@ -1,0 +1,9 @@
+require 'sequel_tools/actions_manager'
+register = ->(*args, &block){ SequelTools::ActionsManager::Action.register *args, &block }
+
+register.call(:before_any, nil){|args, context| puts "before_any: #{context[:current_action].name}" }
+register.call(:before_connect_db, nil){|args, context| puts 'before_connect_db' }
+register.call(:before_any_postgres, nil){|args, context| puts 'before_any_postgres' }
+register.call(:before_connect_db_postgres, nil){|args, context| puts 'before_connect_db_postgres' }
+
+load File.join __dir__, 'Rakefile'

@@ -33,6 +33,11 @@ module SequelTools
         rake_context.instance_eval do
           desc action.description unless action.description.nil?
           task action.name, action.arg_names do |t, args|
+            adapter = ctx[:config][:dbadapter]
+            hooks = [:before_any, :"before_#{action.name}", :"before_any_#{adapter}",
+                     :"before_#{action.name}_#{adapter}"]
+            ctx[:current_action] = action
+            hooks.each{|h| a = Action[h] and a.run args, ctx }
             action.run args, ctx
           end
         end
