@@ -8,6 +8,8 @@
 /tmp/
 /spec/sample_project/db/migrations/
 /spec/sample_project/db/seeds.rb
+/spec/sample_project/bin/bundle
+/spec/sample_project/bin/sequel
 
 # rspec failure tracking
 .rspec_status
