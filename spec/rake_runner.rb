@@ -6,6 +6,8 @@ require_relative 'fast_rake_runner'
 class RakeRunner
   include Singleton
 
+  attr_reader :project_root
+
   def initialize
     require 'open3'
     @project_root = File.expand_path 'sample_project', __dir__

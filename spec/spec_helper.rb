@@ -56,6 +56,11 @@ module SpecHelpers
     require_relative 'rake_runner'
     RakeRunner.instance
   end
+
+  def rake_exec_runner
+    require_relative 'rake_exec_runner'
+    RakeExecRunner.instance
+  end
 end
 
 RSpec.configure do |config|

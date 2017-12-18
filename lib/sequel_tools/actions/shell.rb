@@ -3,8 +3,6 @@
 require_relative '../actions_manager'
 
 class SequelTools::ActionsManager
-  # TODO: this action is not currently tested automatically as it's not critical and not
-  # trivial to write a test for
   Action.register :shell, 'Open an interactive shell to the database' do |args, context|
     begin
       Action[:connect_db].run({}, context)

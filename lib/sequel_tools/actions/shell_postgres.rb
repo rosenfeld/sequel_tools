@@ -3,8 +3,6 @@
 require_relative '../actions_manager'
 
 class SequelTools::ActionsManager
-  # TODO: this action is not currently tested automatically as it's not critical and not
-  # trivial to write a test for
   Action.register :shell_postgres, nil do |args, context|
     c = context[:config]
     psql = c[:psql]
