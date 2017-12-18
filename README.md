@@ -74,8 +74,29 @@ Then you are able to run several tasks (`rake -T` will list all supported):
     rake db:create
     rake db:new_migration[migration_name]
     rake db:migrate
+    # setup creates the database, loads the latest schema
+    # and import seeds when available
     rake dbtest:setup
-    rake dbtest:shell
+    # reset drops (if existing) then recreate the database, run all migrations
+    # and import seeds when available
+    rake dbtest:reset
+    # shell opens a psql section to the database for the PostgreSQL adapter
+    rake db:shell
+    # irb runs "bundle exec sequel" pointing to the database and stores the connection in "DB"
+    rake db:irb
+    rake db:rollback
+    rake db:status
+    # version displays latest applied migration
+    rake db:version
+    rake db:seed
+    rake db:redo[migration_filename]
+    rake db:down[migration_filename]
+    rake db:up[migration_filename]
+    # schema_dump is called automatically after migrate/rollback/up/down/redo
+    # if passing { dump_schema_on_migrate: true } to the config
+    rake db:schema_dump
+    # database must be empty before calling db:schema_load
+    rake db:schema_load
 
 You may define your own command to open a shell to your database upon the 'db:shell' task.
 PostgreSQL is supported out-of-the-box, but if it wasn't, here's a sample script that would
