@@ -21,6 +21,11 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem 'sequel_tools'
+gem 'rake'
+
+# For PostgreSQL:
+gem 'pg', platform: :mri
+gem 'jdbc-postgres', platform: :jruby
 ```
 
 And then execute:
