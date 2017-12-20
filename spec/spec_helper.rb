@@ -2,6 +2,9 @@
 
 require 'bundler/setup'
 
+# just in case, as it seems it may cause some weird behavior with JRuby:
+['PGDATABASE', 'PGHOST', 'PGUSER', 'PGPORT', 'PGPASSWORD'].each{|e| ENV.delete e }
+
 module SpecHelpers
   CACHE = {}
 
