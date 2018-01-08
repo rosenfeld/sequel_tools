@@ -15,7 +15,7 @@ class RakeExecRunner
   class IncompleteResponse < StandardError; end
   class TimedOut < StandardError; end
 
-  DEFAULT_TIMEOUT = RUBY_PLATFORM == 'java' ? 10 : 2
+  DEFAULT_TIMEOUT = RUBY_PLATFORM == 'java' ? 15 : 2
   def wait_output(task, input, regex, timeout: DEFAULT_TIMEOUT, max_length: 100000)
     PTY.spawn("cd #{@rake_runner.project_root} && bundle exec rake #{task}") do |r, w, pid|
       w.puts input
