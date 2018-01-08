@@ -8,7 +8,7 @@ SequelTools::ActionsManager::Action.register :connect_db, nil do |args, context|
   next if context[:db]
   config = context[:config]
   context[:db] = db = SequelTools.suppress_java_output do
-    Sequel.connect context[:uri_builder].call config
+    Sequel.connect context[:uri_builder].call(config), test: true
   end
   db.sql_log_level = config[:sql_log_level]
   db.log_connection_info = false
