@@ -16,7 +16,8 @@ class SequelTools::ActionsManager
         puts "Schema file '#{schema_location}' does not exist. Aborting."
         exit 1
       end
-      context[:db] << File.read(schema_location)
+      context[:db].run File.read(schema_location)
+      context[:db].disconnect # forces reconnection
     end
   end
 end
