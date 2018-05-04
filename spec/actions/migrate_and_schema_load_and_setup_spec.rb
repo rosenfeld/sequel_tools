@@ -15,7 +15,7 @@ RSpec.describe 'migrate and schema_load and setup actions', order: :defined do
     expect(rake_runner.run_task('dbtest:create dbtest:new_migration[sample] dbtest:migrate')).
       to be_successful
     expect(File.exist?(schema_location)).to be true
-    expect(File.read schema_location).to match /INSERT INTO schema_migrations VALUES \('\d{14}_sample\.rb'\);/
+    expect(File.read schema_location).to match /INSERT INTO (public\.)?schema_migrations VALUES \('\d{14}_sample\.rb'\);/
   end
 
   it 'loads from dump to a new database' do

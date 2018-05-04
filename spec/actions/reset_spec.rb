@@ -36,9 +36,9 @@ RSpec.describe 'reset action' do
       expect(db.tables).to_not include :a
     end
     expect(File.read schema_location).
-      to match /INSERT INTO schema_migrations VALUES \('20171111111111_sample\.rb'\);/
+      to match /INSERT INTO (public\.)?schema_migrations VALUES \('20171111111111_sample\.rb'\);/
     expect(File.read schema_location).
-      to match /INSERT INTO schema_migrations VALUES \('20171111111112_second\.rb'\);/
+      to match /INSERT INTO (public\.)?schema_migrations VALUES \('20171111111112_second\.rb'\);/
   end
 end
 
