@@ -16,7 +16,6 @@ class SequelTools::ActionsManager
       context[:db].log_info "Created database '#{c[:dbname]}'"
     else
       puts 'Database already exists - aborting'
-      exit 1
     end
   end
 end
