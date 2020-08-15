@@ -13,7 +13,6 @@ class SequelTools::ActionsManager
       Action[:seed].run({}, context)
     else
       puts 'Database already exists - aborting.'
-      exit 1
     end
   end
 end
