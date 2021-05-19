@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    sequel_tools (0.1.7)
+    sequel_tools (0.1.9)
       sequel
 
 GEM
@@ -15,6 +15,7 @@ GEM
 PLATFORMS
   java
   ruby
+  universal-java-1.8
 
 DEPENDENCIES
   jdbc-postgres
@@ -23,4 +24,4 @@ DEPENDENCIES
   sequel_tools!
 
 BUNDLED WITH
-   2.2.11
+   2.2.17
