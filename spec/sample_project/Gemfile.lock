@@ -1,16 +1,16 @@
 PATH
   remote: ../..
   specs:
-    sequel_tools (0.1.6)
+    sequel_tools (0.1.7)
       sequel
 
 GEM
   remote: https://rubygems.org/
   specs:
-    jdbc-postgres (42.1.4)
-    pg (0.21.0)
-    rake (12.3.0)
-    sequel (5.3.0)
+    jdbc-postgres (42.2.14)
+    pg (1.2.3)
+    rake (13.0.3)
+    sequel (5.44.0)
 
 PLATFORMS
   java
@@ -23,4 +23,4 @@ DEPENDENCIES
   sequel_tools!
 
 BUNDLED WITH
-   1.16.0
+   2.2.11
