@@ -2,6 +2,6 @@ sudo: true
 language: ruby
 rvm:
   - 3.0.1
-  - jruby-9.2.17.0
+  #- jruby-9.2.17.0
 before_install: scripts/ci/travis-build.sh
 #before_install: gem install bundler -v 1.16.0
