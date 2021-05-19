@@ -1,0 +1,2 @@
+# fix warnings in Travis CI build caused by RVM using the -client option in JRUBY_OPTS
+unset JRUBY_OPTS
