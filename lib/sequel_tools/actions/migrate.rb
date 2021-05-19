@@ -12,6 +12,7 @@ class SequelTools::ActionsManager
     Sequel.extension :migration unless Sequel.respond_to? :migration
     options = {}
     options[:target] = args[:version].to_i if args[:version]
+    options[:table] = config[:migrations_table] if config[:migrations_table]
     Sequel::Migrator.run db, config[:migrations_location], options
     Action[:schema_dump].run({}, context) if config[:dump_schema_on_migrate]
   end

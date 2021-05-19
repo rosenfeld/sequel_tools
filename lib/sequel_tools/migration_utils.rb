@@ -22,6 +22,7 @@ class MigrationUtils
     options = { allow_missing_migration_files: true }
     options[:target] = 0 if direction == :down
     config = context[:config]
+    options[:table] = config[:migrations_table] if config[:migrations_table]
     Sequel::Migrator.migrator_class(config[:migrations_location]).
       new(context[:db], config[:migrations_location], options)
   end
