@@ -15,8 +15,11 @@ class SequelTools::ActionsManager
     migrations_table = c[:migrations_table]
     if (migrations_table ? content.include?(migrations_table) :
         (content =~ /schema_(migrations|info)/))
-      table_options = migrations_table ? "-t #{migrations_table}" :
-        '-t schema_migrations -t schema_info'
+      include_tables = migrations_table ? [migrations_table] :
+        ['schema_migrations', 'schema_info']
+      extra_tables = c[:extra_tables_in_dump]
+      include_tables.concat extra_tables if extra_tables
+      table_options = include_tables.map{|t| "-t #{t}"}.join(' ')
       stdout, stderr, success =
         PgHelper.run_pg_command c, "#{pg_dump} -a #{table_options} --inserts"
       unless success

@@ -21,6 +21,7 @@ module SequelTools
     log_level: nil,
     sql_log_level: :debug,
     migrations_table: nil,
+    extra_tables_in_dump: nil,
   } # unfrozen on purpose so that one might want to update the defaults
 
   REQUIRED_KEYS = [ :project_root, :dbadapter, :dbname, :username ]
