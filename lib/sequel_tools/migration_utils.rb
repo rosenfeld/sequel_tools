@@ -43,7 +43,8 @@ class MigrationUtils
   def self.migrations_differences(context)
     config = context[:config]
     migrations_path = config[:migrations_location]
-    existing = Dir["#{migrations_path}/*.rb"].map{|fn| File.basename fn }.sort
+    existing = Dir["#{migrations_path}/*.rb"].map{|fn| File.basename(fn).downcase }.sort
+    existing.delete(File.basename(config[:seeds_location])&.downcase)
     migrator = find_migrator context
     migrated = migrator.ds.select_order_map(migrator.column)
     unapplied = existing - migrated
