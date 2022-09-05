@@ -32,7 +32,7 @@ RSpec.describe 'stores schema.sql' do
       expect(rake_runner.run_task('dbtest:create')).to be_successful
       expect(rake_runner.run_task('dbtest:migrate')).to be_successful
       expect(rake_runner.run_task('dbtest_schema_table:schema_dump')).to be_successful
-      expect(File.read(schema_location)).to match /insert into (public\.)?schema_migrations values \('20171111111111_first\.rb'\);/i
+      expect(File.read(schema_location)).to match /insert into (public\.)?schema_migrations values \('20171111111112_second\.rb'\);/i
     end
 
     # the test case exercising data from schema_migrations is exercised in the migrate specs
