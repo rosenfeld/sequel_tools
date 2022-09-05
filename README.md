@@ -131,7 +131,7 @@ approve your pull requests and you'd be able to maintain it independently.
 ## Development and running tests
 
 The tests assume the database `sequel_tools_test_pw` exists and can be only accessed using a
-username and password. It also assumes a valid user/passwd is `user_tools_user/secret`. The
+username and password. It also assumes a valid user/passwd is `sequel_tools_user/secret`. The
 database `sequel_tools_test` is also required to exist and it should be possible to access it
 using the `trust` authentication method, without requiring a password. You may achieve that by
 adding these lines to the start of your `pg_hba.conf`:
