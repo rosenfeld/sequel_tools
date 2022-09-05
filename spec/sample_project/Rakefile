@@ -24,3 +24,7 @@ end
 namespace 'dbtestverbose' do
   SequelTools.inject_rake_tasks dbtest_config.merge(log_level: :info), self
 end
+
+namespace 'dbtest_schema_table' do
+  SequelTools.inject_rake_tasks dbtest_config.merge(schema_table: :custom_schema_mig), self
+end

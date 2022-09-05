@@ -12,9 +12,13 @@ class SequelTools::ActionsManager
     stdout, stderr, success = PgHelper.run_pg_command c, "#{pg_dump} -s"
     return unless success
     content = stdout
-    if content =~ /schema_(migrations|info)/
+    migrations_table = c[:migrations_table]
+    if (migrations_table ? content.include?(migrations_table) :
+        (content =~ /schema_(migrations|info)/))
+      table_options = migrations_table ? "-t #{migrations_table}" :
+        '-t schema_migrations -t schema_info'
       stdout, stderr, success =
-        PgHelper.run_pg_command c, "#{pg_dump} -a -t schema_migrations -t schema_info --inserts"
+        PgHelper.run_pg_command c, "#{pg_dump} -a #{table_options} --inserts"
       unless success
         puts 'failed to dump data for schema_migrations and schema_info. Aborting.'
         exit 1
