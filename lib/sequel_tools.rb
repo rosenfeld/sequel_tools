@@ -40,7 +40,7 @@ module SequelTools
   def self.inject_rake_tasks(config = {}, rake_context)
     require_relative 'sequel_tools/actions_manager'
     require_relative 'sequel_tools/all_actions'
-    actions_manager = ActionsManager.new config
+    actions_manager = ActionsManager.new base_config(config)
     actions_manager.load_all
     actions_manager.export_as_rake_tasks rake_context
   end
