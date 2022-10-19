@@ -1,6 +1,8 @@
 # frozen-string-literal: true
 
 require 'sequel_tools/version'
+require 'sequel/core'
+require 'uri'
 
 module SequelTools
   DEFAULT_CONFIG = {
@@ -11,6 +13,7 @@ module SequelTools
     migrations_location: 'db/migrations',
     schema_location: 'db/migrations/schema.sql',
     seeds_location: 'db/seeds.rb',
+    db_url: nil,
     dbname: nil,
     dbhost: 'localhost',
     dbadapter: 'postgres',
@@ -24,13 +27,27 @@ module SequelTools
     extra_tables_in_dump: nil,
   } # unfrozen on purpose so that one might want to update the defaults
 
-  REQUIRED_KEYS = [ :dbadapter, :dbname, :username ]
   class MissingConfigError < StandardError; end
   def self.base_config(extra_config = {})
     config = DEFAULT_CONFIG.merge extra_config
-    REQUIRED_KEYS.each do |key|
-      raise MissingConfigError, "Expected value for #{key} config is missing" if config[key].nil?
+    unless config[:db_url] || (config[:dbadapter && config[:dbname]])
+      raise MissingConfigError, "Must provide either :db_url or :dbadapter and :dbname config options"
     end
+
+    if config[:db_url]
+      db = Sequel.connect(config[:db_url], test: false, keep_reference: false)
+      if RUBY_PLATFORM == 'java'
+        uri = URI.parse(config[:db_url][/\Ajdbc:(.+)/, 1])
+        config[:dbadapter] = uri.scheme
+        config[:dbname] = uri.path[/\/(.+)/, 1]
+      else
+        config[:dbadapter] = db.opts[:adapter]
+        config[:dbname] = db.opts[:database]
+      end
+      config[:username] = db.opts[:user]
+      config[:password] = db.opts[:password]
+    end
+
     [:migrations_location, :schema_location, :seeds_location].each do |k|
       config[k] = File.expand_path config[k], config[:project_root]
     end

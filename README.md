@@ -34,6 +34,16 @@ And then execute:
 
 ## Usage
 
+The simplest way to get started:
+
+```rb
+require 'sequel_tools'
+
+namespace :db do
+  SequelTools.inject_rake_tasks Hash[db_url: 'postgres://username:password@localhost/dbname'], self
+end
+```
+
 Here's a sample Rakefile supporting migrate actions:
 
 ```ruby
