@@ -41,7 +41,7 @@ require 'bundler/setup'
 require 'sequel_tools'
 
 base_config = SequelTools.base_config(
-  project_root: File.expand_path(__dir__),
+  project_root: __dir__,
   dbadapter: 'postgres',
   dbname: 'mydb',
   username: 'myuser',

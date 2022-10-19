@@ -4,7 +4,7 @@ require 'sequel_tools/version'
 
 module SequelTools
   DEFAULT_CONFIG = {
-    project_root: nil,
+    project_root: Dir.pwd,
     pg_dump: 'pg_dump', # command used to run pg_dump
     psql: 'psql', # command used to run psql
     maintenancedb: :default, # DB to connect to for creating/dropping databases
@@ -24,7 +24,7 @@ module SequelTools
     extra_tables_in_dump: nil,
   } # unfrozen on purpose so that one might want to update the defaults
 
-  REQUIRED_KEYS = [ :project_root, :dbadapter, :dbname, :username ]
+  REQUIRED_KEYS = [ :dbadapter, :dbname, :username ]
   class MissingConfigError < StandardError; end
   def self.base_config(extra_config = {})
     config = DEFAULT_CONFIG.merge extra_config
