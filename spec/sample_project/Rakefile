@@ -2,8 +2,8 @@
 
 require 'sequel_tools'
 
-base_config = SequelTools.base_config project_root: File.expand_path(__dir__),
-  dbadapter: 'postgres', dbname: 'sequel_tools_test', username: 'sequel_tools_user'
+base_config = { dbadapter: 'postgres', dbname: 'sequel_tools_test',
+  username: 'sequel_tools_user' }
 
 namespace 'db' do
   SequelTools.inject_rake_tasks base_config, self

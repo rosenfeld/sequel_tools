@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    sequel_tools (0.1.9)
+    sequel_tools (0.1.13)
       sequel
 
 GEM
@@ -10,7 +10,7 @@ GEM
     jdbc-postgres (42.2.14)
     pg (1.2.3)
     rake (13.0.3)
-    sequel (5.44.0)
+    sequel (5.61.0)
 
 PLATFORMS
   java
