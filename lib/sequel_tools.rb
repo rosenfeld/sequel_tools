@@ -24,7 +24,7 @@ module SequelTools
     extra_tables_in_dump: nil,
   } # unfrozen on purpose so that one might want to update the defaults
 
-  REQUIRED_KEYS = [ :dbadapter, :dbname, :username ]
+  REQUIRED_KEYS = [ :dbadapter, :dbname ]
   class MissingConfigError < StandardError; end
   def self.base_config(extra_config = {})
     config = DEFAULT_CONFIG.merge extra_config
