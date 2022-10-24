@@ -7,12 +7,14 @@ class PgHelper
     Tempfile.open 'pgpass' do |file|
       c = config
       file.chmod 0600
-      file.write "#{c[:dbhost]}:#{c[:dbport]}:#{c[:dbname]}:#{c[:username]}:#{c[:password]}"
+      host = c[:dbhost] || 'localhost'
+      port = c[:dbport] || '5432'
+      file.write "#{host}:#{port}:#{c[:dbname]}:#{c[:username]}:#{c[:password]}"
       file.close
       env = {
         'PGDATABASE' => connect_database || c[:dbname],
-        'PGHOST' => c[:dbhost],
-        'PGPORT' => c[:dbport].to_s,
+        'PGHOST' => host,
+        'PGPORT' => port.to_s,
         'PGUSER' => c[:username],
         'PGPASSFILE' => file.path
       }

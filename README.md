@@ -127,7 +127,7 @@ PGPASSWORD=$DBPASSWORD
 psql
 ```
 
-Then you may pass `shell_command: '~/bin/opensql'` to `SequelTools.base_config`.
+Then you may set `shell_command: '~/bin/opensql'` in config.
 
 Alternatively you can define the `shell_#{dbadapter}` action if you prefer. Take a look at
 the implementation for `shell_postgres` to see how to do that. If you want to share that action

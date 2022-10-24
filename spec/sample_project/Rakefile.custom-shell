@@ -2,10 +2,10 @@
 
 require 'sequel_tools'
 
-base_config = { dbadapter: 'postgres', dbname: 'sequel_tools_test',
-  username: 'sequel_tools_user', dbport: 5432, password: 'secret',
+config = { dbadapter: 'postgres', dbname: 'sequel_tools_test',
+  username: 'sequel_tools_user', dbhost: 'localhost', dbport: 5432, password: 'secret',
   shell_command: File.expand_path('custom-shell', __dir__)}
 
 namespace 'db' do
-  SequelTools.inject_rake_tasks base_config, self
+  SequelTools.inject_rake_tasks config, self
 end

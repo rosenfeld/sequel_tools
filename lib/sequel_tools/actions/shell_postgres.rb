@@ -8,8 +8,8 @@ class SequelTools::ActionsManager
     psql = c[:psql]
     env = {
       'PGDATABASE' => c[:dbname],
-      'PGHOST' => c[:dbhost],
-      'PGPORT' => c[:dbport].to_s,
+      'PGHOST' => c[:dbhost] || 'localhost',
+      'PGPORT' => (c[:dbport] || 5432).to_s,
       'PGUSER' => c[:username],
       'PGPASSWORD' => c[:password].to_s,
     }

@@ -12,7 +12,7 @@ module SequelTools
     schema_location: 'db/migrations/schema.sql',
     seeds_location: 'db/seeds.rb',
     dbname: nil,
-    dbhost: 'localhost',
+    dbhost: nil,
     dbadapter: 'postgres',
     dbport: nil,
     username: nil,

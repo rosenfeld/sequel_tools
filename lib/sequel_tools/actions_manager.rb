@@ -9,9 +9,14 @@ module SequelTools
       uri_parts = []
       uri_parts << 'jdbc:' if RUBY_PLATFORM == 'java'
       uri_parts << "#{c[:jdbc_adapter] || c[:dbadapter]}://"
-      uri_parts << c[:dbhost]
-      uri_parts << ':' << c[:dbport] if c[:dbport]
-      uri_parts << '/' << dbname
+      host = c[:dbhost]
+      host ||= 'localhost' unless (c[:dbadapter] == 'sqlite') || c[:no_dbhost]
+      if host
+        uri_parts << host
+        uri_parts << ':' << c[:dbport] if c[:dbport]
+        uri_parts << '/'
+      end
+      uri_parts << dbname
       if user = c[:username]
         uri_parts << '?user=' << user
         uri_parts << '&password=' << c[:password] if c[:password]
