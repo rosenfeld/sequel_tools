@@ -32,9 +32,13 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'sequel'
+  spec.add_runtime_dependency 'logger'
+  spec.add_runtime_dependency 'irb'
   spec.add_development_dependency 'pg' unless RUBY_PLATFORM == 'java'
   spec.add_development_dependency 'jdbc-postgres' if RUBY_PLATFORM == 'java'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
+
+  spec.add_development_dependency 'benchmark'
 end

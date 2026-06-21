@@ -9,7 +9,7 @@ class SequelTools::ActionsManager
     pg_dump = c[:pg_dump]
     schema_location = c[:schema_location]
 
-    stdout, stderr, success = PgHelper.run_pg_command c, "#{pg_dump} -s"
+    stdout, _stderr, success = PgHelper.run_pg_command c, "#{pg_dump} -s"
     return unless success
     content = stdout
     migrations_table = c[:migrations_table]
@@ -20,13 +20,14 @@ class SequelTools::ActionsManager
       extra_tables = c[:extra_tables_in_dump]
       include_tables.concat extra_tables if extra_tables
       table_options = include_tables.map{|t| "-t #{t}"}.join(' ')
-      stdout, stderr, success =
+      stdout, _stderr, success =
         PgHelper.run_pg_command c, "#{pg_dump} -a #{table_options} --inserts"
       unless success
         puts 'failed to dump data for schema_migrations and schema_info. Aborting.'
         exit 1
       end
-      content = [content, stdout].join "\n\n"
+      content = [content, stdout].join("\n\n")
+        .gsub(/^\\(un)?restrict [A-Za-z0-9]+$/m, "")
     end
     require 'fileutils'
     FileUtils.mkdir_p File.dirname schema_location

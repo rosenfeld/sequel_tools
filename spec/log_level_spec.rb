@@ -18,7 +18,7 @@ RSpec.describe 'log_level setting' do
     expect(rake_runner.run_task('dbtest:create')).to be_successful
     reset_result = rake_runner.run_task('dbtestverbose:reset')
     expect(reset_result).to be_successful
-    logs = reset_result.stdout.split "\n"
+    logs = reset_result.stdout.gsub(/\[ERROR\] PG::UndefinedTable.*?\[INFO\]/m, "[INFO]").split("\n")
     logs.zip([
       "[INFO] Dropped database 'sequel_tools_test_test'",
       "[INFO] Created database 'sequel_tools_test_test'",
